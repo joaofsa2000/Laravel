@@ -49,7 +49,7 @@ class TopicController extends Controller
     {
         request()->validate([
             "text" => "required|min:10",
-            "title" => "required|min:10",
+            "title" => "required|min:5",
         ]);
         $topic = new Topic();
         $topic->title =request()->post('title');

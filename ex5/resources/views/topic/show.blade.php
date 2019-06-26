@@ -11,6 +11,9 @@
             margin:0;
             background-color: transparent;
         }
+        .boxed {
+            border: 1px solid grey;
+        }
     </style>
 @endsection
 
@@ -25,8 +28,17 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/topics">Topic</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{$topic->title}}</li>
-                        </ol>    
+                            <li class="breadcrumb-item active" aria-current="page">{{$topic->title}}</li>   
+                            <li class="breadcrumb-item">                                
+                                    <span class="badge badge-secondary">{{$topic->created_at->format('Y-m-d')}}</span>
+                                    @if($topic->open)
+                                        <span class='badge badge-success'>Aberto</span>
+                                    @else 
+                                        <span class='badge badge-danger'>Fechado</span>
+                                    @endif                                
+                            </li>                         
+                        </ol>  
+                          
                     </nav>
                 </div>
 
@@ -38,18 +50,17 @@
                             <input class="btn btn-primary btn-sm" type="submit" value="{{ ($topic->open ? 'Fechar' : 'Abrir') }} Tópico" style="float:right;">
                         </form>
                         @endif
-                        <h1>{{$topic->title}}</h1>
-                        <h4><span class="badge badge-secondary">{{$topic->created_at->format('Y-m-d')}}</span>
-                        @if($topic->open)
-                            <span class='badge badge-success'>Aberto</span>
-                        @else 
-                            <span class='badge badge-danger'>Fechado</span>
-                        @endif
-                        </h4>
+                        <h1>{{$topic->title}}</h1>                    
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <p class="text">{{$topic->text}}</p>
+                                </div>                                
+                            </div>                        
+                        </div>
+                        
 
-                        <p class="text">{{$topic->text}}</p>
-
-                        <h2>Respostas:</h2>
+                        <h2><p>Respostas:</p></h2>
 
                         @if(!$answered && $topic->open)
                             @if ($errors->any())

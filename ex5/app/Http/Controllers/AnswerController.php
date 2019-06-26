@@ -49,7 +49,7 @@ class AnswerController extends Controller
     public function store(Request $request, $id)
     {
         request()->validate([
-            "answer" => "required|min:10",
+            "answer" => "required|min:5",
         ]);
         if(Auth::user()->id==Topic::find($id)->user_id || !Topic::find($id)->open || count(Topic_Answered::all()->where('user_id',Auth::user()->id)->where('topic_id',$id))!=0)
             return redirect("/topics/".$id);
@@ -57,6 +57,8 @@ class AnswerController extends Controller
         $answer= new Answer();
         $answer->answer=request()->post("answer");
         $answer->topic_id=$id;
+        $answer->user_name=Auth::user()->name;
+        $answer->user_id=Auth::user()->id;
         $answer->save();
 
         $topic_answered = new Topic_Answered();

@@ -15,7 +15,9 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('answer');
+            $table->longText('answer'); //if wants answer hide user_id else
+            $table->unsignedBigInteger('user_id'); // if wants user_id hide answer :)
+            $table->string('user_name');         
             $table->unsignedBigInteger('topic_id');
             $table->foreign('topic_id')->references('id')->on('topics');
             $table->timestamps();
